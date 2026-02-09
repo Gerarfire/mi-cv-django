@@ -1,278 +1,869 @@
-{% extends "cv/base_cv.html" %}
+{% extends 'base.html' %}
 
-{% block contenido %}
+{% block title %}Hoja de Vida{% endblock %}
+
+{% block extra_css %}
 <style>
-/* --- BARRA DE NAVEGACIÓN --- */
-.tabs-nav {
-    background-color: #1f2a30;
-    padding: 15px 20px;
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 15px;
-    margin-bottom: 30px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-
-.nav-left {
-    display: flex;
-    gap: 15px;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-}
-
-.tab-btn {
-    background-color: transparent;
-    border: none;
-    font-family: 'Segoe UI', sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    color: #bdc3c7;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    padding: 5px 10px;
-    position: relative;
-    text-decoration: none;
-    display: inline-block;
-}
-
-.tab-btn:hover { color: white; }
-.tab-btn.active { color: #3498db; font-weight: bold; }
-
-.tab-btn.active::after {
-    content: '';
-    display: block;
-    width: 100%;
-    height: 2px;
-    background-color: #3498db;
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-}
-
-/* CONTENIDO */
-.tab-content { display: none; animation: fadeIn 0.5s ease; }
-.tab-content.active { display: block; }
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* PERFIL */
-.profile-card {
-    background-color: white;
-    border-radius: 20px;
-    padding: 50px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 40px;
-    position: relative;
-    overflow: hidden;
-}
-
-.profile-photo-container {
-    flex: 0 0 auto;
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    overflow: hidden;
-    border: 5px solid #f0f2f5;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
-
-.profile-photo-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.profile-info { flex: 1; min-width: 300px; }
-
-.profile-name {
-    font-size: 3rem;
-    font-weight: 800;
-    color: #1f2a30;
-    line-height: 1.1;
-    margin-bottom: 10px;
-}
-
-.profile-desc {
-    font-size: 1.2rem;
-    color: #3498db;
-    font-weight: 500;
-    margin-bottom: 30px;
-}
-
-.data-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-}
-
-.data-item {
-    font-size: 0.95rem;
-    color: #555;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.data-item b {
-    color: #1f2a30;
-    font-weight: 700;
-    margin-right: 3px;
-}
-
-.icon {
-    font-size: 1.3rem;
-    vertical-align: middle;
-}
-
-.data-link {
-    color: #555;
-    text-decoration: none;
-    transition: color 0.2s;
-}
-
-.data-link:hover { color: #3498db; }
-
-.profile-actions {
-    flex: 0 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    justify-content: center;
-}
-
-.btn-big {
-    display: inline-block;
-    padding: 15px 30px;
-    background-color: #3498db;
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-    border-radius: 50px;
-    text-align: center;
-}
-
-.btn-secondary-action {
-    background-color: white;
-    color: #1f2a30;
-    border: 2px solid #f0f2f5;
-}
-
-/* MODAL */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.85);
-}
-
-.modal-content {
-    margin: auto;
-    display: block;
-    width: 80%;
-    max-width: 800px;
-    max-height: 80vh;
-    object-fit: contain;
-    border-radius: 10px;
-    margin-top: 5%;
-}
-
-.close-modal {
-    position: absolute;
-    top: 20px;
-    right: 35px;
-    color: white;
-    font-size: 40px;
-    cursor: pointer;
-}
+    /* Estilos para las tarjetas de información */
+    .card-item {
+        background-color: var(--card-bg);
+        border-radius: 10px;
+        border-left: 4px solid var(--primary-color);
+        margin-bottom: 20px;
+        padding: 20px;
+        box-shadow: var(--card-shadow);
+        transition: all 0.3s ease;
+    }
+    
+    .card-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .card-title {
+        font-size: 1.4rem;
+        font-weight: 600;
+        color: var(--primary-color);
+        margin-bottom: 15px;
+    }
+    
+    .card-info {
+        margin-bottom: 15px;
+    }
+    
+    .card-label {
+        font-weight: 600;
+        margin-right: 5px;
+        color: var(--text-color);
+    }
+    
+    .card-value {
+        color: var(--text-light);
+    }
+    
+    .card-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 15px;
+        padding-top: 15px;
+        border-top: 1px solid var(--border-color);
+    }
+    
+    .btn-certificate {
+        flex: 1;
+        padding: 8px 15px;
+        border-radius: 5px;
+        text-align: center;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+    
+    .btn-view {
+        background-color: var(--primary-color);
+        color: white;
+    }
+    
+    .btn-view:hover {
+        background-color: var(--accent-color);
+        color: white;
+    }
+    
+    .btn-download {
+        background-color: var(--secondary-color);
+        color: white;
+    }
+    
+    .btn-download:hover {
+        background-color: var(--accent-color);
+        color: white;
+    }
+    
+    .btn-disabled {
+        background-color: var(--text-muted);
+        color: white;
+        cursor: not-allowed;
+        opacity: 0.7;
+    }
+    
+    .section-divider {
+        margin: 40px 0;
+        border-top: 1px solid var(--border-color);
+        position: relative;
+    }
+    
+    .section-divider::before {
+        content: attr(data-title);
+        position: absolute;
+        top: -12px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: var(--bg-color);
+        padding: 0 20px;
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: var(--text-color);
+    }
+    
+    .badge-status {
+        display: inline-block;
+        padding: 3px 10px;
+        border-radius: 15px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        margin-left: 10px;
+    }
+    
+    .badge-current {
+        background-color: rgba(76, 175, 80, 0.2);
+        color: #4CAF50;
+    }
+    
+    .badge-in-progress {
+        background-color: rgba(66, 133, 244, 0.2);
+        color: #4285F4;
+    }
+    
+    .badge-general {
+        background-color: rgba(66, 133, 244, 0.2);
+        color: #4285F4;
+    }
+    
+    .badge-labor {
+        background-color: rgba(219, 68, 55, 0.2);
+        color: #DB4437;
+    }
+    
+    /* Estilos para productos laborales */
+    .producto-image-container {
+        width: 100%;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    
+    .producto-image {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+    
+    .producto-image:hover {
+        transform: scale(1.05);
+    }
+    
+    .btn-more-info {
+        display: block;
+        width: 100%;
+        padding: 12px 15px;
+        background-color: #0047AB; /* Azul cobalto */
+        color: white;
+        text-align: center;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        margin-top: 15px;
+    }
+    
+    .btn-more-info:hover {
+        background-color: #003380;
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0, 71, 171, 0.4);
+        color: white;
+        text-decoration: none;
+    }
+    
+    .btn-more-info.disabled {
+        background-color: #7c98b6;
+        cursor: not-allowed;
+        opacity: 0.7;
+    }
+    
+    .btn-more-info i {
+        margin-right: 8px;
+    }
 </style>
-
-<div class="profile-card">
-
-    <div class="profile-photo-container">
-        {% if perfil.fotoperfil %}
-            <img src="{{ perfil.fotoperfil.url }}">
-        {% endif %}
-    </div>
-
-    <div class="profile-info">
-        <div class="profile-name">
-            {{ perfil.nombres }} {{ perfil.apellidos }}
-        </div>
-
-        <div class="profile-desc">
-            {{ perfil.descripcionperfil }}
-        </div>
-
-        <div class="data-item">
-            📍 {{ perfil.direcciondomiciliaria }}
-        </div>
-
-        <div class="data-item">
-            📞 {{ perfil.telefonofijo }}
-        </div>
-
-        <div class="data-item">
-            🌐 {{ perfil.sitioweb }}
-        </div>
-    </div>
-
-</div>
-
-<script>
-function openTab(evt, tabName) {
-    var i, tabcontent, tablinks;
-
-    tabcontent = document.getElementsByClassName("tab-content");
-    for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
-        tabcontent[i].classList.remove("active");
-    }
-
-    tablinks = document.getElementsByClassName("tab-btn");
-    for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].className =
-            tablinks[i].className.replace(" active", "");
-    }
-
-    document.getElementById(tabName).style.display = "block";
-    document.getElementById(tabName).classList.add("active");
-
-    if (evt) evt.currentTarget.className += " active";
-}
-
-function openModal(imgUrl, captionText) {
-    var modal = document.getElementById("imageModal");
-    var modalImg = document.getElementById("modalImg");
-    var caption = document.getElementById("caption");
-
-    modal.style.display = "block";
-    modalImg.src = imgUrl;
-    caption.innerHTML = captionText;
-}
-
-function closeModal() {
-    document.getElementById("imageModal").style.display = "none";
-}
-
-window.onclick = function(event) {
-    var modal = document.getElementById("imageModal");
-    if (event.target == modal) closeModal();
-}
-</script>
 {% endblock %}
 
+{% block content %}
+<!-- Incluir las diferentes secciones -->
+<div id="datos-personales" class="section">
+    <h2 class="section-title">Datos Personales</h2>
+    
+    {% if datos_personales %}
+        <!-- Sobre mí -->
+        <div class="profile-section mb-4">
+            <h3 class="profile-section-title">Sobre mí</h3>
+            <div class="profile-section-content">
+                <p>{{ datos_personales.descripcionperfil }}</p>
+            </div>
+        </div>
+        
+        <div class="row">
+            <!-- Datos personales -->
+            <div class="col-md-4 mb-4">
+                <div class="profile-section">
+                    <h3 class="profile-section-title">Datos personales</h3>
+                    <div class="profile-section-content">
+                        <div class="profile-item">
+                            <span class="profile-label">Nombre:</span>
+                            <span class="profile-value">{{ datos_personales.nombres }} {{ datos_personales.apellidos }}</span>
+                        </div>
+                        <div class="profile-item">
+                            <span class="profile-label">Edad:</span>
+                            <span class="profile-value">{{ datos_personales.edad }} años</span>
+                        </div>
+                        <div class="profile-item">
+                            <span class="profile-label">Nacionalidad:</span>
+                            <span class="profile-value">{{ datos_personales.nacionalidad }}</span>
+                        </div>
+                        <div class="profile-item">
+                            <span class="profile-label">Estado civil:</span>
+                            <span class="profile-value">{{ datos_personales.estadocivil }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Ubicación -->
+            <div class="col-md-4 mb-4">
+                <div class="profile-section">
+                    <h3 class="profile-section-title">Ubicación</h3>
+                    <div class="profile-section-content">
+                        <div class="profile-item">
+                            <span class="profile-label">Dirección:</span>
+                            <span class="profile-value">{{ datos_personales.direccionhabitual }}</span>
+                        </div>
+                        <div class="profile-item">
+                            <span class="profile-label">Ciudad:</span>
+                            <span class="profile-value">{{ datos_personales.lugardenacimiento }}</span>
+                        </div>
+                        <div class="profile-item">
+                            <span class="profile-label">País:</span>
+                            <span class="profile-value">{{ datos_personales.nacionalidad }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Información de contacto -->
+            <div class="col-md-4 mb-4">
+                <div class="profile-section">
+                    <h3 class="profile-section-title">Información de contacto</h3>
+                    <div class="profile-section-content">
+                        <div class="profile-item">
+                            <span class="profile-label">Email:</span>
+                            <span class="profile-value">
+                                {% if datos_personales.email_contacto %}
+                                    {{ datos_personales.email_contacto }}
+                                {% else %}
+                                    {% if datos_personales.activoweb and datos_personales.activoweb|lower != "activo" and datos_personales.activoweb|lower != "no activo" %}
+                                        {{ datos_personales.activoweb }}
+                                    {% else %}
+                                        -------------
+                                    {% endif %}
+                                {% endif %}
+                            </span>
+                        </div>
+                        <div class="profile-item">
+                            <span class="profile-label">Teléfono:</span>
+                            <span class="profile-value">{{ datos_personales.telefonocelular }}</span>
+                        </div>
+                        {% if datos_personales.telefonoconvencional %}
+                        <div class="profile-item">
+                            <span class="profile-label">Teléfono convencional:</span>
+                            <span class="profile-value">{{ datos_personales.telefonoconvencional }}</span>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Funciones y competencias -->
+        <div class="profile-section mt-4">
+            <h3 class="profile-section-title">Funciones y competencias</h3>
+            <div class="profile-section-content">
+                <p>{{ datos_personales.funcionescompetencias|linebreaks }}</p>
+            </div>
+        </div>
+    {% else %}
+        <div class="empty-state">
+            <i class="fas fa-user-circle fa-3x mb-3"></i>
+            <p>No hay datos personales registrados.</p>
+        </div>
+    {% endif %}
+</div>
+
+<div id="experiencia-laboral" class="section" style="display: none;">
+    <h2 class="section-title">Experiencia Laboral</h2>
+    
+    {% if experiencias_laborales %}
+        {% for experiencia in experiencias_laborales %}
+            <div class="card-item">
+                <h4 class="card-title">
+                    {{ experiencia.cargodesempenado }} - {{ experiencia.nombreempresa }}
+                    {% if experiencia.trabajo_actual %}
+                        <span class="badge-status badge-current">Actualidad</span>
+                    {% endif %}
+                </h4>
+                
+                <div class="card-info">
+                    <span class="card-label">Empresa:</span>
+                    <span class="card-value">{{ experiencia.nombreempresa }}</span>
+                </div>
+                
+                <div class="card-info">
+                    <span class="card-label">Ubicación:</span>
+                    <span class="card-value">{{ experiencia.lugarempresa }}</span>
+                </div>
+                
+                <div class="card-info">
+                    <span class="card-label">Periodo:</span>
+                    <span class="card-value">
+                        {{ experiencia.fechainiciocontrato|date:"d/m/Y" }} - 
+                        {% if experiencia.trabajo_actual %}
+                            Actualidad
+                        {% else %}
+                            {{ experiencia.fechafincontrato|date:"d/m/Y" }}
+                        {% endif %}
+                    </span>
+                </div>
+                
+                <div class="card-info">
+                    <span class="card-label">Descripción:</span>
+                    <span class="card-value">{{ experiencia.descripcionfunciones }}</span>
+                </div>
+                
+                <div class="card-info">
+                    <span class="card-label">Contacto:</span>
+                    <span class="card-value">{{ experiencia.nombrecontactoprincipalempresarial }} - {{ experiencia.telefonocontactoempresarial }}</span>
+                </div>
+                
+                <!-- Se ha eliminado la visualización del sueldo certificado -->
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="empty-state">
+            <i class="fas fa-briefcase fa-3x mb-3"></i>
+            <p>No hay experiencia laboral registrada.</p>
+        </div>
+    {% endif %}
+</div>
+
+<div id="productos-academicos" class="section" style="display: none;">
+    <h2 class="section-title">Productos Académicos</h2>
+    
+    <div class="row">
+        {% if productos_academicos %}
+            {% for producto in productos_academicos %}
+                <div class="col-md-6 mb-4">
+                    <div class="card-item">
+                        <h4 class="card-title">{{ producto.nombrerecurso }}</h4>
+                        
+                        <div class="card-info">
+                            <span class="card-label">Clasificación:</span>
+                            <span class="card-value">{{ producto.clasificador }}</span>
+                        </div>
+                        
+                        <div class="card-info">
+                            <span class="card-label">Descripción:</span>
+                            <span class="card-value">{{ producto.descripcion }}</span>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="col-12">
+                <div class="empty-state">
+                    <i class="fas fa-book fa-3x mb-3"></i>
+                    <p>No hay productos académicos registrados.</p>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<div id="productos-laborales" class="section" style="display: none;">
+    <h2 class="section-title">Productos Laborales</h2>
+    
+    <div class="row">
+        {% if productos_laborales %}
+            {% for producto in productos_laborales %}
+                <div class="col-md-6 mb-4">
+                    <div class="card-item">
+                        <h4 class="card-title">{{ producto.nombreproducto }}</h4>
+                        
+                        {% if producto.imagen_producto %}
+                        <div class="producto-image-container">
+                            <img src="{{ producto.imagen_producto }}" alt="{{ producto.nombreproducto }}" class="producto-image">
+                        </div>
+                        {% endif %}
+                        
+                        <div class="card-info">
+                            <span class="card-label">Fecha:</span>
+                            <span class="card-value">{{ producto.fechaproducto|date:"d/m/Y" }}</span>
+                        </div>
+                        
+                        <div class="card-info">
+                            <span class="card-label">Estado:</span>
+                            <span class="card-value">{{ producto.estadoproducto }}</span>
+                        </div>
+                        
+                        {% if producto.lugarproducto %}
+                        <div class="card-info">
+                            <span class="card-label">Lugar:</span>
+                            <span class="card-value">{{ producto.lugarproducto }}</span>
+                        </div>
+                        {% endif %}
+                        
+                        <div class="card-info">
+                            <span class="card-label">Descripción:</span>
+                            <span class="card-value">{{ producto.descripcion }}</span>
+                        </div>
+                        
+                        {% if producto.valordelibro %}
+                        <div class="card-info">
+                            <span class="card-label">Valor:</span>
+                            <span class="card-value">${{ producto.valordelibro }}</span>
+                        </div>
+                        {% endif %}
+                        
+                        {% if producto.link_proyecto %}
+                            <a href="{{ producto.link_proyecto }}" target="_blank" class="btn-more-info">
+                                <i class="fas fa-phone-alt"></i> Más información
+                            </a>
+                        {% else %}
+                            <button class="btn-more-info disabled">
+                                <i class="fas fa-phone-alt"></i> Más información
+                            </button>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="col-12">
+                <div class="empty-state">
+                    <i class="fas fa-project-diagram fa-3x mb-3"></i>
+                    <p>No hay productos laborales registrados.</p>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<div id="cursos" class="section" style="display: none;">
+    <h2 class="section-title">Cursos y Títulos</h2>
+    
+    <!-- Botones de navegación para subsecciones -->
+    <div class="section-nav-buttons">
+        <button class="section-nav-button active" data-target="estudios">Estudios Realizados</button>
+        <button class="section-nav-button" data-target="cursos">Cursos Realizados</button>
+    </div>
+    
+    <!-- Subsección de Estudios Realizados -->
+    <div class="subsection-content" id="estudios-content">
+        {% if educacion %}
+            {% for edu in educacion %}
+                <div class="card-item education-item">
+                    <h4 class="card-title">
+                        {{ edu.titulo }}
+                        {% if edu.en_curso %}
+                            <span class="badge-status badge-in-progress">En curso</span>
+                        {% endif %}
+                    </h4>
+                    
+                    <div class="card-info">
+                        <span class="card-label">Institución:</span>
+                        <span class="card-value">{{ edu.institucion }}</span>
+                    </div>
+                    
+                    <div class="card-info">
+                        <span class="card-label">Periodo:</span>
+                        <span class="card-value">
+                            {{ edu.fecha_inicio|date:"d/m/Y" }} - 
+                            {% if edu.en_curso %}
+                                Actualidad
+                            {% else %}
+                                {{ edu.fecha_fin|date:"d/m/Y" }}
+                            {% endif %}
+                        </span>
+                    </div>
+                    
+                    {% if edu.nivel_titulo %}
+                    <div class="card-info">
+                        <span class="card-label">Nivel:</span>
+                        <span class="card-value">{{ edu.nivel_titulo }}</span>
+                    </div>
+                    {% endif %}
+                    
+                    {% if edu.area_conocimiento %}
+                    <div class="card-info">
+                        <span class="card-label">Área:</span>
+                        <span class="card-value">{{ edu.area_conocimiento }}</span>
+                    </div>
+                    {% endif %}
+                    
+                    {% if edu.descripcion %}
+                    <div class="card-info">
+                        <span class="card-label">Descripción:</span>
+                        <span class="card-value">{{ edu.descripcion }}</span>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="card-actions">
+                        {% if edu.titulo_documento %}
+                            <a href="{{ edu.titulo_documento }}" target="_blank" class="btn-certificate btn-view">
+                                <i class="fas fa-eye"></i> Ver título
+                            </a>
+                            <a href="{{ edu.titulo_documento }}" class="btn-certificate btn-download" onclick="event.preventDefault(); downloadFile('{{ edu.titulo_documento }}', '{{ edu.titulo|slugify }}_titulo.pdf')">
+                                <i class="fas fa-download"></i> Descargar título
+                            </a>
+                        {% else %}
+                            <span class="btn-certificate btn-view btn-disabled">
+                                <i class="fas fa-eye-slash"></i> No hay título adjunto
+                            </span>
+                            <span class="btn-certificate btn-download btn-disabled">
+                                <i class="fas fa-download"></i> Descargar título
+                            </span>
+                        {% endif %}
+                    </div>
+                </div>
+            {% empty %}
+                <div class="empty-state">
+                    <i class="fas fa-graduation-cap fa-3x mb-3"></i>
+                    <p>No hay estudios registrados actualmente.</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="empty-state">
+                <i class="fas fa-graduation-cap fa-3x mb-3"></i>
+                <p>No hay estudios registrados actualmente.</p>
+            </div>
+        {% endif %}
+    </div>
+    
+    <!-- Subsección de Cursos Realizados -->
+    <div class="subsection-content" id="cursos-content" style="display: none;">
+        {% if cursos %}
+            {% for curso in cursos %}
+                <div class="card-item certificate-container">
+                    <h4 class="card-title">
+                        {{ curso.nombrecurso }}
+                        {% if curso.en_curso %}
+                            <span class="badge-status badge-in-progress">En curso</span>
+                        {% endif %}
+                    </h4>
+                    
+                    <div class="card-info">
+                        <span class="card-label">Entidad:</span>
+                        <span class="card-value">{{ curso.entidadpatrocinadora }}</span>
+                    </div>
+                    
+                    <div class="card-info">
+                        <span class="card-label">Periodo:</span>
+                        <span class="card-value">
+                            {{ curso.fechainicio|date:"d/m/Y" }} - 
+                            {% if curso.en_curso %}
+                                Actualidad
+                            {% else %}
+                                {{ curso.fechafin|date:"d/m/Y" }}
+                            {% endif %}
+                        </span>
+                    </div>
+                    
+                    <div class="card-info">
+                        <span class="card-label">Total horas:</span>
+                        <span class="card-value">{{ curso.totalhoras }}</span>
+                    </div>
+                    
+                    <div class="card-info">
+                        <span class="card-label">Descripción:</span>
+                        <span class="card-value">{{ curso.descripcioncurso }}</span>
+                    </div>
+                    
+                    <div class="card-info">
+                        <span class="card-label">Contacto:</span>
+                        <span class="card-value">{{ curso.nombrereconocimientoasignado }} - {{ curso.telefonocontactoasignado }}</span>
+                    </div>
+                    
+                    <div class="card-actions">
+                        {% if curso.certificado %}
+                            <a href="{{ curso.certificado }}" target="_blank" class="btn-certificate btn-view">
+                                <i class="fas fa-eye"></i> Ver certificado
+                            </a>
+                            <a href="{{ curso.certificado }}" class="btn-certificate btn-download" onclick="event.preventDefault(); downloadFile('{{ curso.certificado }}', '{{ curso.nombrecurso|slugify }}_certificado.pdf')">
+                                <i class="fas fa-download"></i> Descargar certificado
+                            </a>
+                        {% else %}
+                            <span class="btn-certificate btn-view btn-disabled">
+                                <i class="fas fa-eye-slash"></i> No hay certificado adjunto
+                            </span>
+                            <span class="btn-certificate btn-download btn-disabled">
+                                <i class="fas fa-download"></i> Descargar certificado
+                            </span>
+                        {% endif %}
+                    </div>
+                </div>
+            {% empty %}
+                <div class="empty-state">
+                    <i class="fas fa-book fa-3x mb-3"></i>
+                    <p>No hay cursos registrados actualmente.</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="empty-state">
+                <i class="fas fa-book fa-3x mb-3"></i>
+                <p>No hay cursos registrados actualmente.</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<div id="reconocimientos" class="section" style="display: none;">
+    <h2 class="section-title">Logros y Reconocimientos</h2>
+    
+    <!-- Botones de navegación para subsecciones -->
+    <div class="section-nav-buttons">
+        <button class="section-nav-button active" data-target="generales">Generales</button>
+        <button class="section-nav-button" data-target="laborales">Laborales</button>
+    </div>
+    
+    <!-- Subsección de Reconocimientos Generales -->
+    <div class="subsection-content" id="generales-content">
+        {% if reconocimientos_generales %}
+            {% for recon in reconocimientos_generales %}
+                <div class="card-item recognition-item">
+                    <h4 class="card-title">
+                        {{ recon.tiporeconocimiento }}
+                        <span class="badge-status badge-general">General</span>
+                    </h4>
+                    
+                    <div class="card-info">
+                        <span class="card-label">Fecha:</span>
+                        <span class="card-value">{{ recon.fechareconocimiento|date:"d/m/Y" }}</span>
+                    </div>
+                    
+                    <div class="card-info">
+                        <span class="card-label">Entidad:</span>
+                        <span class="card-value">{{ recon.entidadpatrocinadora }}</span>
+                    </div>
+                    
+                    <div class="card-info">
+                        <span class="card-label">Descripción:</span>
+                        <span class="card-value">{{ recon.descripcionreconocimiento }}</span>
+                    </div>
+                    
+                    <div class="card-info">
+                        <span class="card-label">Contacto:</span>
+                        <span class="card-value">{{ recon.nombrecontactoasignado }} - {{ recon.telefonocontactoasignado }}</span>
+                    </div>
+                    
+                    {% if recon.emailcontacto %}
+                    <div class="card-info">
+                        <span class="card-label">Email:</span>
+                        <span class="card-value">{{ recon.emailcontacto }}</span>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="card-actions">
+                        {% if recon.reconocimiento %}
+                            <a href="{{ recon.reconocimiento }}" target="_blank" class="btn-certificate btn-view">
+                                <i class="fas fa-eye"></i> Ver reconocimiento
+                            </a>
+                            <a href="{{ recon.reconocimiento }}" class="btn-certificate btn-download" onclick="event.preventDefault(); downloadFile('{{ recon.reconocimiento }}', '{{ recon.tiporeconocimiento|slugify }}_reconocimiento.pdf')">
+                                <i class="fas fa-download"></i> Descargar reconocimiento
+                            </a>
+                        {% else %}
+                            <span class="btn-certificate btn-view btn-disabled">
+                                <i class="fas fa-eye-slash"></i> No hay reconocimiento adjunto
+                            </span>
+                            <span class="btn-certificate btn-download btn-disabled">
+                                <i class="fas fa-download"></i> Descargar reconocimiento
+                            </span>
+                        {% endif %}
+                    </div>
+                </div>
+            {% empty %}
+                <div class="empty-state">
+                    <i class="fas fa-trophy fa-3x mb-3"></i>
+                    <p>No hay reconocimientos generales registrados actualmente.</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="empty-state">
+                <i class="fas fa-trophy fa-3x mb-3"></i>
+                <p>No hay reconocimientos generales registrados actualmente.</p>
+            </div>
+        {% endif %}
+    </div>
+    
+    <!-- Subsección de Reconocimientos Laborales -->
+    <div class="subsection-content" id="laborales-content" style="display: none;">
+        {% if reconocimientos_laborales %}
+            {% for recon in reconocimientos_laborales %}
+                <div class="card-item recognition-item">
+                    <h4 class="card-title">
+                        {{ recon.tiporeconocimiento }}
+                        <span class="badge-status badge-labor">Laboral</span>
+                    </h4>
+                    
+                    <div class="card-info">
+                        <span class="card-label">Fecha:</span>
+                        <span class="card-value">{{ recon.fechareconocimiento|date:"d/m/Y" }}</span>
+                    </div>
+                    
+                    <div class="card-info">
+                        <span class="card-label">Entidad:</span>
+                        <span class="card-value">{{ recon.entidadpatrocinadora }}</span>
+                    </div>
+                    
+                    <div class="card-info">
+                        <span class="card-label">Descripción:</span>
+                        <span class="card-value">{{ recon.descripcionreconocimiento }}</span>
+                    </div>
+                    
+                    <div class="card-info">
+                        <span class="card-label">Contacto:</span>
+                        <span class="card-value">{{ recon.nombrecontactoasignado }} - {{ recon.telefonocontactoasignado }}</span>
+                    </div>
+                    
+                    {% if recon.emailcontacto %}
+                    <div class="card-info">
+                        <span class="card-label">Email:</span>
+                        <span class="card-value">{{ recon.emailcontacto }}</span>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="card-actions">
+                        {% if recon.reconocimiento %}
+                            <a href="{{ recon.reconocimiento }}" target="_blank" class="btn-certificate btn-view">
+                                <i class="fas fa-eye"></i> Ver reconocimiento
+                            </a>
+                            <a href="{{ recon.reconocimiento }}" class="btn-certificate btn-download" onclick="event.preventDefault(); downloadFile('{{ recon.reconocimiento }}', '{{ recon.tiporeconocimiento|slugify }}_reconocimiento.pdf')">
+                                <i class="fas fa-download"></i> Descargar reconocimiento
+                            </a>
+                        {% else %}
+                            <span class="btn-certificate btn-view btn-disabled">
+                                <i class="fas fa-eye-slash"></i> No hay reconocimiento adjunto
+                            </span>
+                            <span class="btn-certificate btn-download btn-disabled">
+                                <i class="fas fa-download"></i> Descargar reconocimiento
+                            </span>
+                        {% endif %}
+                    </div>
+                </div>
+            {% empty %}
+                <div class="empty-state">
+                    <i class="fas fa-award fa-3x mb-3"></i>
+                    <p>No hay reconocimientos laborales registrados actualmente.</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="empty-state">
+                <i class="fas fa-award fa-3x mb-3"></i>
+                <p>No hay reconocimientos laborales registrados actualmente.</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Manejo de navegación entre subsecciones
+        const sectionNavButtons = document.querySelectorAll('.section-nav-button');
+        
+        sectionNavButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Obtener el contenedor padre
+                const parentSection = this.closest('.section');
+                if (!parentSection) return;
+                
+                // Obtener todos los botones de navegación en esta sección
+                const navButtons = parentSection.querySelectorAll('.section-nav-button');
+                
+                // Remover clase activa de todos los botones
+                navButtons.forEach(btn => btn.classList.remove('active'));
+                
+                // Agregar clase activa al botón clickeado
+                this.classList.add('active');
+                
+                // Obtener el target del botón
+                const targetId = this.getAttribute('data-target') + '-content';
+                
+                // Obtener todos los contenidos de subsección
+                const subsectionContents = parentSection.querySelectorAll('.subsection-content');
+                
+                // Ocultar todos los contenidos
+                subsectionContents.forEach(content => {
+                    content.style.display = 'none';
+                });
+                
+                // Mostrar el contenido correspondiente
+                const targetContent = document.getElementById(targetId);
+                if (targetContent) {
+                    targetContent.style.display = 'block';
+                }
+            });
+        });
+        
+        // Función para descargar archivos desde Cloudinary
+        window.downloadFile = function(url, fileName) {
+            // Mostrar indicador de carga
+            const loadingOverlay = document.createElement('div');
+            loadingOverlay.style.position = 'fixed';
+            loadingOverlay.style.top = '0';
+            loadingOverlay.style.left = '0';
+            loadingOverlay.style.width = '100%';
+            loadingOverlay.style.height = '100%';
+            loadingOverlay.style.backgroundColor = 'rgba(0,0,0,0.5)';
+            loadingOverlay.style.display = 'flex';
+            loadingOverlay.style.alignItems = 'center';
+            loadingOverlay.style.justifyContent = 'center';
+            loadingOverlay.style.zIndex = '9999';
+            
+            const loadingContent = document.createElement('div');
+            loadingContent.style.backgroundColor = '#fff';
+            loadingContent.style.padding = '20px';
+            loadingContent.style.borderRadius = '5px';
+            loadingContent.style.textAlign = 'center';
+            loadingContent.innerHTML = '<p>Descargando archivo...</p>';
+            
+            loadingOverlay.appendChild(loadingContent);
+            document.body.appendChild(loadingOverlay);
+            
+            // Realizar la solicitud para obtener el archivo
+            fetch(url)
+                .then(response => response.blob())
+                .then(blob => {
+                    // Crear un enlace para descargar el archivo
+                    const downloadLink = document.createElement('a');
+                    downloadLink.href = URL.createObjectURL(blob);
+                    downloadLink.download = fileName;
+                    downloadLink.style.display = 'none';
+                    document.body.appendChild(downloadLink);
+                    downloadLink.click();
+                    document.body.removeChild(downloadLink);
+                    
+                    // Eliminar el indicador de carga
+                    document.body.removeChild(loadingOverlay);
+                })
+                .catch(error => {
+                    console.error('Error al descargar el archivo:', error);
+                    // Eliminar el indicador de carga y mostrar mensaje de error
+                    document.body.removeChild(loadingOverlay);
+                    alert('Error al descargar el archivo. Por favor, inténtelo de nuevo.');
+                });
+        };
+    });
+</script>
+{% endblock %}
