@@ -201,8 +201,37 @@
 }
 </style>
 
-<!-- Tu HTML original sigue aquí sin cambios -->
-<!-- No lo recorto para no romper nada -->
+<div class="profile-card">
+
+    <div class="profile-photo-container">
+        {% if perfil.fotoperfil %}
+            <img src="{{ perfil.fotoperfil.url }}">
+        {% endif %}
+    </div>
+
+    <div class="profile-info">
+        <div class="profile-name">
+            {{ perfil.nombres }} {{ perfil.apellidos }}
+        </div>
+
+        <div class="profile-desc">
+            {{ perfil.descripcionperfil }}
+        </div>
+
+        <div class="data-item">
+            📍 {{ perfil.direcciondomiciliaria }}
+        </div>
+
+        <div class="data-item">
+            📞 {{ perfil.telefonofijo }}
+        </div>
+
+        <div class="data-item">
+            🌐 {{ perfil.sitioweb }}
+        </div>
+    </div>
+
+</div>
 
 <script>
 function openTab(evt, tabName) {
